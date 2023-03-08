@@ -8,7 +8,7 @@ const messages = defineMessages({
   'subscription.cart.order.details': {
     id: 'subscription.cart.order.details',
     defaultMessage: 'After you complete your order you will have verified access to each course in {programTitle}.',
-    description: 'A paragraph explaining what will happen after user enrolls in the program subscription.',
+    description: 'A paragraph explaining what kind of access they will have in this program.',
   },
 });
 
@@ -28,23 +28,30 @@ const SubscriptionOrderDetails = ({
     <div className="basket-section order-details">
       <FormattedMessage
         id="subscription.cart.order.details.heading"
-        defaultMessage="Order Details"
-        description="The heading for details about an order"
+        defaultMessage="Order details"
+        description="The heading for details about an subscription order"
       >
         {text => <h5 aria-level="2">{text}</h5>}
       </FormattedMessage>
-      <p>
-        <FormattedMessage
-          id="subscription.cart.order.details.cancel"
-          defaultMessage="Cancel anytime."
-          description="Inform user that they can cancel their subscription anytime."
-        />
-      </p>
-      <p>
+      <FormattedMessage
+        id="subscription.cart.order.details.taxes"
+        defaultMessage="The above total includes any applicable taxes."
+        description="Subscription details explaining total includes any application taxes."
+      >
+        {text => <p className="text-gray-500 mb-2">{text}</p>}
+      </FormattedMessage>
+      <p className="text-gray-500 mb-2">
         {intl.formatMessage(messages['subscription.cart.order.details'], {
           programTitle,
         })}
       </p>
+      <FormattedMessage
+        id="subscription.cart.order.details.cancel"
+        defaultMessage="Cancel anytime."
+        description="Inform user that they can cancel their subscription anytime."
+      >
+        {text => <p className="text-gray-500">{text}</p>}
+      </FormattedMessage>
     </div>
   );
 };

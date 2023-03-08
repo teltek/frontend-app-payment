@@ -1,19 +1,20 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import classNames from 'classnames';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
 import LocalizedPrice from './LocalizedPrice';
 
 const SummaryTable = ({ price, isSubscription }) => (
   <div className="summary-row d-flex">
-    <span className="flex-grow-1">
+    <span className={classNames('flex-grow-1', { 'text-gray-500': isSubscription })}>
       <FormattedMessage
         id="payment.summary.table.label.price"
         defaultMessage="Price"
         description="Label for price excluding discount line on order summary table"
       />
     </span>
-    <span className="summary-price">
+    <span className={classNames('summary-price', { 'text-gray-500': isSubscription })}>
       <LocalizedPrice amount={price} />
       {
         isSubscription ? (

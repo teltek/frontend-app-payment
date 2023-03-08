@@ -16,7 +16,8 @@ import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import CardHolderInformation from './CardHolderInformation';
 import PlaceOrderButton from './PlaceOrderButton';
-import SubscriptionSubmitButton from '../../../subscription/checkout/SubmitButton/SubscriptionSubmitButton';
+import SubscriptionSubmitButton from '../../../subscription/checkout/submit-button/SubscriptionSubmitButton';
+import MonthlyBillingNotification from '../../../subscription/checkout/monthly-billing-notification/MonthlyBillingNotification';
 import {
   getRequiredFields, validateRequiredFields, validateAsciiNames,
 } from './utils/form-validators';
@@ -129,42 +130,45 @@ const StripePaymentForm = ({
   };
 
   return (
-    <form id="payment-form" ref={inputElement} onSubmit={handleSubmit(onSubmit)} noValidate>
-      <CardHolderInformation
-        showBulkEnrollmentFields={isBulkOrder}
-        disabled={submitting}
-        enableStripePaymentProcessor={enableStripePaymentProcessor}
-      />
-      <h5 aria-level="2">
-        <FormattedMessage
-          id="payment.card.details.billing.information.heading"
-          defaultMessage="Billing Information (Required)"
-          description="The heading for the required credit card details billing information form"
-        />
-      </h5>
-      <PaymentElement
-        id="payment-element"
-        options={options}
-        onReady={stripeElementsOnReady}
-      />
-      {/* TODO: update onSubmitButtonClick handler for SubscriptionSubmitButton */}
-      {isSubscription ? (
-        <SubscriptionSubmitButton
-          onSubmitButtonClick={onSubmitButtonClick}
-          showLoadingButton={showLoadingButton}
+    <>
+      <form id="payment-form" ref={inputElement} onSubmit={handleSubmit(onSubmit)} noValidate>
+        <CardHolderInformation
+          showBulkEnrollmentFields={isBulkOrder}
           disabled={submitting}
-          isProcessing={isProcessing}
+          enableStripePaymentProcessor={enableStripePaymentProcessor}
         />
-      ) : (
-        <PlaceOrderButton
-          onSubmitButtonClick={onSubmitButtonClick}
-          showLoadingButton={showLoadingButton}
-          disabled={submitting}
-          isProcessing={isProcessing}
+        <h5 aria-level="2">
+          <FormattedMessage
+            id="payment.card.details.billing.information.heading"
+            defaultMessage="Billing Information (Required)"
+            description="The heading for the required credit card details billing information form"
+          />
+        </h5>
+        <PaymentElement
+          id="payment-element"
+          options={options}
+          onReady={stripeElementsOnReady}
         />
-      )}
+        {/* TODO: update onSubmitButtonClick handler for SubscriptionSubmitButton */}
+        {isSubscription ? (
+          <SubscriptionSubmitButton
+            onSubmitButtonClick={onSubmitButtonClick}
+            showLoadingButton={showLoadingButton}
+            disabled={submitting}
+            isProcessing={isProcessing}
+          />
+        ) : (
+          <PlaceOrderButton
+            onSubmitButtonClick={onSubmitButtonClick}
+            showLoadingButton={showLoadingButton}
+            disabled={submitting}
+            isProcessing={isProcessing}
+          />
+        )}
 
-    </form>
+      </form>
+      {!isStripeElementLoading && isSubscription ? (<MonthlyBillingNotification price="39.33" />) : null}
+    </>
   );
 };
 

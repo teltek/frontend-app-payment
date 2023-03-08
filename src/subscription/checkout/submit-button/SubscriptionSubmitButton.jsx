@@ -23,7 +23,7 @@ const SubscriptionSubmitButton = ({
             type="submit"
             id="placeOrderButton"
             variant={isSubmitted ? 'success' : 'brand'}
-            size="lg"
+            size="md"
             block
             state={submitButtonState}
             onClick={onSubmitButtonClick}

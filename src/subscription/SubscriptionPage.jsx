@@ -60,7 +60,7 @@ export class SubscriptionPage extends React.Component {
     // view of the left-hand side of the interface until the actual content arrives.
 
     return (
-      <div className="row subscription-page">
+      <div className="row">
         <h1 className="sr-only">
           <FormattedMessage
             id="subscription.screen.heading.page"
@@ -80,7 +80,7 @@ export class SubscriptionPage extends React.Component {
 
   render() {
     return (
-      <div className="page__payment container-fluid py-5">
+      <div className="subscription-page page__payment container-fluid py-5">
         <FormattedAlertList
           summaryQuantity={this.props.summaryQuantity}
           summarySubtotal={this.props.summarySubtotal}
