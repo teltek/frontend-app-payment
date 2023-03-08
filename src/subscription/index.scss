@@ -1,20 +1,19 @@
-@mixin badge-responsive{
-  flex-direction: column-reverse;      
-  .badge{
-    margin-bottom: 1rem;
-  }
-}
-
-@mixin product-title-column {
-  flex-direction: column;
-  align-items: flex-start !important;
-  .col-7 {
-    padding-left: 1rem !important;
-    margin-top: 0.5rem !important;
-  }
-}
 
 .subscription-page {
+  @mixin badge-responsive{
+    flex-direction: column-reverse;      
+    .badge{
+      margin-bottom: 1rem;
+    }
+  }
+  @mixin product-title-column {
+    flex-direction: column;
+    align-items: flex-start !important;
+    .col-7 {
+      padding-left: 1rem !important;
+      margin-top: 0.5rem !important;
+    }
+  }
   .heading-badge-wrapper {
     @extend .d-flex;
     @extend .justify-content-between;
@@ -64,7 +63,16 @@
     }
     span.text-danger{
       color: $brand-500 !important;
-      @extend small
+      @extend small;
     }
   }
 }
+
+// .confirmation-modal {
+//   .pgn__modal-body {
+//     @include media-breakpoint-down(xs){ 
+//       font-size: 14px;
+//       line-height: 24px;
+//     }
+//   }
+// }

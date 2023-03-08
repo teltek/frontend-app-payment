@@ -167,7 +167,7 @@ const StripePaymentForm = ({
         )}
 
       </form>
-      {!isStripeElementLoading && isSubscription ? (<MonthlyBillingNotification price="39.33" />) : null}
+      {!isStripeElementLoading && isSubscription ? (<MonthlyBillingNotification price={39.33} />) : null}
     </>
   );
 };

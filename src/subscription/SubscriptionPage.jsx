@@ -19,6 +19,7 @@ import EmptyCartMessage from '../payment/EmptyCartMessage';
 import SubscriptionCart from './cart/SubscriptionCart';
 import Checkout from '../payment/checkout/Checkout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
+import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 
 /**
  * Subscription Page
@@ -86,6 +87,7 @@ export class SubscriptionPage extends React.Component {
           summarySubtotal={this.props.summarySubtotal}
         />
         {this.renderContent()}
+        <ConfirmationModal />
       </div>
     );
   }
