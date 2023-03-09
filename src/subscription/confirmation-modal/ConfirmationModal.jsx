@@ -27,10 +27,9 @@ const messages = defineMessages({
 
 /**
  * ConfirmationModal
- * TODO: fix the responsive styles for xxs device
  */
 export const ConfirmationModal = ({ price, programTitle }) => {
-  const [isOpen] = useState(true);
+  const [isOpen] = useState(false);
   const intl = useIntl();
   // TODO: update the correct URL
   const ordersAndSubscriptionLink = (

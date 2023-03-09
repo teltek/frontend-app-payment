@@ -8,16 +8,15 @@ import messages from '../../payment/cart/Cart.messages';
 import { cartSelector } from '../../payment/data/selectors';
 import { ORDER_TYPES } from '../../payment/data/constants';
 
-import BulkOrderSummaryTable from '../../payment/cart/BulkOrderSummaryTable';
-import CartSkeleton from '../../payment/cart/CartSkeleton';
-import SubscriptionContent from './content/SubscriptionContent';
 import CurrencyDisclaimer from '../../payment/cart/CurrencyDisclaimer';
 import OrderSummary from '../../payment/cart/OrderSummary';
 import ProductLineItem from '../../payment/cart/ProductLineItem';
 import SummaryTable from '../../payment/cart/SummaryTable';
 import TotalTable from '../../payment/cart/TotalTable';
-import UpdateQuantityForm from '../../payment/cart/UpdateQuantityForm';
+
+import SubscriptionCartSkeleton from './skeleton/SubscriptionCartSkeleton';
 import SubscriptionLegal from './legal/SubscriptionLegal';
+import SubscriptionContent from './content/SubscriptionContent';
 import SubscriptionOrderDetails from './order-details/SubscriptionOrderDetails';
 
 /**
@@ -28,15 +27,11 @@ class SubscriptionCart extends React.Component {
   renderCart() {
     const {
       products,
-      orderType,
       isCurrencyConverted,
       orderTotal,
       summaryPrice,
-      summarySubtotal,
-      summaryQuantity,
       loaded,
     } = this.props;
-    const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     return (
       <div>
         <span className="sr-only">
@@ -54,21 +49,12 @@ class SubscriptionCart extends React.Component {
               {...product}
             />
           ))}
-
-          {isBulkOrder ? <UpdateQuantityForm /> : null}
         </SubscriptionContent>
-
         {loaded
           ? (
-            <OrderSummary> {isBulkOrder ? (
-              <BulkOrderSummaryTable
-                price={summaryPrice}
-                subtotal={summarySubtotal}
-                quantity={summaryQuantity}
-              />
-            ) : (<SummaryTable price={summaryPrice} isSubscription />)}
+            <OrderSummary>
+              <SummaryTable price={summaryPrice} isSubscription />
               <TotalTable total={orderTotal} isSubscription />
-
               {isCurrencyConverted ? <CurrencyDisclaimer /> : null}
             </OrderSummary>
           ) : (
@@ -96,7 +82,7 @@ class SubscriptionCart extends React.Component {
         aria-relevant="all"
         aria-label={intl.formatMessage(messages['payment.section.cart.label'])}
       >
-        {loading ? <CartSkeleton /> : this.renderCart() }
+        {loading ? <SubscriptionCartSkeleton /> : this.renderCart() }
       </section>
     );
   }
@@ -114,8 +100,6 @@ SubscriptionCart.propTypes = {
   orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   isCurrencyConverted: PropTypes.bool,
   orderTotal: PropTypes.number,
-  summarySubtotal: PropTypes.number,
-  summaryQuantity: PropTypes.number,
   summaryPrice: PropTypes.number,
 };
 
@@ -126,8 +110,6 @@ SubscriptionCart.defaultProps = {
   orderType: ORDER_TYPES.SEAT,
   isCurrencyConverted: false,
   orderTotal: undefined,
-  summarySubtotal: undefined,
-  summaryQuantity: undefined,
   summaryPrice: undefined,
 };
 
