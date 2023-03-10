@@ -27,10 +27,7 @@
   }
   .product-wrapper {    
     .col-7 {          
-      @extend .pl-0;
-      p {
-        @extend .text-gray-500;
-      }
+      @extend .pl-0;      
     }
     @include media-breakpoint-down(xl){ 
       @include product-title-column;

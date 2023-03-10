@@ -37,7 +37,7 @@ const CartContents = ({ children }) => (
           description="Sub heading for the program certificate type in product details section"
         />
       </h4>
-      <p aria-level="2" className="body small mb-5 text-gray-500">
+      <p aria-level="2" className="body small mb-5">
         <FormattedMessage
           id="subscription.purchase.cart.program.organization"
           defaultMessage="University of California, Berkeley"

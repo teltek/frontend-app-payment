@@ -17,7 +17,7 @@ import { paymentSelector } from '../payment/data/selectors';
 import PageLoading from '../payment/PageLoading';
 import EmptyCartMessage from '../payment/EmptyCartMessage';
 import SubscriptionCart from './cart/SubscriptionCart';
-import Checkout from '../payment/checkout/Checkout';
+import SubscriptionCheckout from './checkout/SubscriptionCheckout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
 import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 
@@ -73,7 +73,7 @@ export class SubscriptionPage extends React.Component {
           <SubscriptionCart />
         </div>
         <div className="col-md-7 pl-lg-5 checkout-wrapper">
-          <Checkout isSubscription />
+          <SubscriptionCheckout />
         </div>
       </div>
     );

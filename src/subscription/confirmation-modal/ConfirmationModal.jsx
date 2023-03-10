@@ -4,7 +4,7 @@ import {
 } from '@edx/paragon';
 import PropTypes from 'prop-types';
 import { ArrowForward } from '@edx/paragon/icons';
-
+import { getConfig } from '@edx/frontend-platform';
 import { useIntl, defineMessages, FormattedMessage } from '@edx/frontend-platform/i18n';
 
 const messages = defineMessages({
@@ -34,7 +34,7 @@ export const ConfirmationModal = ({ price, programTitle }) => {
   // TODO: update the correct URL
   const ordersAndSubscriptionLink = (
     <Hyperlink
-      destination="https://support.edx.org/hc/en-us/sections/115004173027-Receive-and-Share-edX-Certificates"
+      destination={getConfig().ORDER_HISTORY_URL}
     >
       {intl.formatMessage(messages['subscription.confirmation.modal.body.orders.link'])}
     </Hyperlink>
@@ -57,7 +57,7 @@ export const ConfirmationModal = ({ price, programTitle }) => {
           }
         </ModalDialog.Title>
       </ModalDialog.Header>
-      <ModalDialog.Body className="text-gray-500">
+      <ModalDialog.Body>
         {
           intl.formatMessage(messages['subscription.confirmation.modal.body'], {
             price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),

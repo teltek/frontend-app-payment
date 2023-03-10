@@ -38,9 +38,9 @@ const SubscriptionOrderDetails = ({
         defaultMessage="The above total includes any applicable taxes."
         description="Subscription details explaining total includes any application taxes."
       >
-        {text => <p className="text-gray-500 mb-2">{text}</p>}
+        {text => <p className="mb-2">{text}</p>}
       </FormattedMessage>
-      <p className="text-gray-500 mb-2">
+      <p className="mb-2">
         {intl.formatMessage(messages['subscription.cart.order.details'], {
           programTitle,
         })}
@@ -50,7 +50,7 @@ const SubscriptionOrderDetails = ({
         defaultMessage="Cancel anytime."
         description="Inform user that they can cancel their subscription anytime."
       >
-        {text => <p className="text-gray-500">{text}</p>}
+        {text => <p>{text}</p>}
       </FormattedMessage>
     </div>
   );

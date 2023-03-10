@@ -17,7 +17,7 @@ const SubscriptionLegal = ({
     </Hyperlink>
   );
   return (
-    <p className="micro text-gray-500">{intl.formatMessage(messages['subscription.cart.order.legal'], {
+    <p className="micro">{intl.formatMessage(messages['subscription.cart.order.legal'], {
       price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),
       programTitle,
       supportLink,

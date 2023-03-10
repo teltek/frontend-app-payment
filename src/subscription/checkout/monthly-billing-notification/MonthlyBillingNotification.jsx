@@ -16,7 +16,7 @@ const MonthlyBillingNotification = ({
   const intl = useIntl();
   return (
     <div className="d-flex col-12 justify-content-end pr-0">
-      <p className="micro text-gray-500">
+      <p className="micro">
         {
         intl.formatMessage(messages['subscription.checkout.billing.notification'], {
           price: intl.formatNumber(price, { style: 'currency', currency: 'USD' }),
