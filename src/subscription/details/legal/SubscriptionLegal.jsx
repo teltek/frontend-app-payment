@@ -27,13 +27,10 @@ const SubscriptionLegal = ({
 };
 
 SubscriptionLegal.propTypes = {
-  programTitle: PropTypes.string,
-  price: PropTypes.number,
+  programTitle: PropTypes.string.isRequired,
+  price: PropTypes.number.isRequired,
 };
 
-SubscriptionLegal.defaultProps = {
-  programTitle: 'Blockchain Fundamentals',
-  price: 15.99,
-};
+SubscriptionLegal.defaultProps = {};
 
 export default SubscriptionLegal;

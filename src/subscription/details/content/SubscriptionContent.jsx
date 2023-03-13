@@ -4,7 +4,7 @@ import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Badge } from '@edx/paragon';
 
 // TODO: Fix the a11y and dynamic headings
-const CartContents = ({ children }) => (
+const CartContents = ({ children, details }) => (
   <div className="basket-section">
     <h5 aria-level="2">
       <FormattedMessage
@@ -16,11 +16,7 @@ const CartContents = ({ children }) => (
     <div className="">
       <div className="heading-badge-wrapper">
         <h3 aria-level="2" className="mb-0">
-          <FormattedMessage
-            id="subscription.purchase.cart.program.title"
-            defaultMessage="Blockchain Fundamentals"
-            description="Title of the subscription Program"
-          />
+          {details.programTitle}
         </h3>
         <Badge variant="light">
           <FormattedMessage
@@ -30,6 +26,8 @@ const CartContents = ({ children }) => (
           />
         </Badge>
       </div>
+
+      {/** TODO: Render different certificate types as Done in <ProductLineItem /> */}
       <h4 aria-level="2" className="mb-0">
         <FormattedMessage
           id="subscription.purchase.cart.certificate.type"
@@ -38,11 +36,7 @@ const CartContents = ({ children }) => (
         />
       </h4>
       <p aria-level="2" className="body small mb-5">
-        <FormattedMessage
-          id="subscription.purchase.cart.program.organization"
-          defaultMessage="University of California, Berkeley"
-          description="Organization name in the product details section"
-        />
+        {details.organization}
       </p>
       <h5>
         <FormattedMessage
@@ -57,11 +51,12 @@ const CartContents = ({ children }) => (
 );
 
 CartContents.propTypes = {
-  children: PropTypes.node,
-};
-
-CartContents.defaultProps = {
-  children: undefined,
+  children: PropTypes.node.isRequired,
+  details: PropTypes.shape({
+    programTitle: PropTypes.string,
+    programType: PropTypes.string,
+    organization: PropTypes.string,
+  }).isRequired,
 };
 
 export default CartContents;

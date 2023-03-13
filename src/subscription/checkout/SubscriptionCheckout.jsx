@@ -11,12 +11,12 @@ import {
 import { sendTrackEvent } from '@edx/frontend-platform/analytics';
 
 import messages from '../../payment/checkout/Checkout.messages';
-import { paymentSelector, updateClientSecretSelector } from '../../payment/data/selectors';
-import { fetchClientSecret, submitPayment } from '../../payment/data/actions';
+import { paymentSelector } from '../data/subscription/selectors';
+import { submitPayment } from '../data/subscription/actions';
+import { fetchClientSecret } from '../data/client-secret/actions';
+import { updateClientSecretSelector } from '../data/client-secret/selectors';
 
 import StripePaymentForm from '../../payment/checkout/payment-form/StripePaymentForm';
-import FreeCheckoutOrderButton from '../../payment/checkout/FreeCheckoutOrderButton';
-import { ORDER_TYPES } from '../../payment/data/constants';
 import CheckoutSkeleton from './skeleton/CheckoutSkeleton';
 
 class SubscriptionCheckout extends React.Component {
@@ -41,25 +41,15 @@ class SubscriptionCheckout extends React.Component {
     );
   };
 
-  handleSubmitFreeCheckout = () => {
-    sendTrackEvent(
-      'edx.bi.ecommerce.basket.free_checkout',
-      { type: 'click', category: 'checkout', stripeEnabled: this.props.enableStripePaymentProcessor },
-    );
-  };
-
   renderCheckoutOptions() {
     const {
       enableStripePaymentProcessor,
-      isFreeBasket,
       isBasketProcessing,
       loading,
       loaded,
       paymentMethod,
       submitting,
-      orderType,
     } = this.props;
-    const isBulkOrder = orderType === ORDER_TYPES.BULK_ENROLLMENT;
     const isQuantityUpdating = isBasketProcessing && loaded;
 
     // Stripe element config
@@ -104,14 +94,6 @@ class SubscriptionCheckout extends React.Component {
     // istanbul ignore next
     const stripeIsSubmitting = submitting && paymentMethod === 'stripe';
 
-    if (isFreeBasket) {
-      return (
-        <FreeCheckoutOrderButton
-          onClick={this.handleSubmitFreeCheckout}
-        />
-      );
-    }
-
     // TODO: Right now when fetching capture context, CyberSource's captureKey is saved as clientSecretId
     // so we cannot rely on !options.clientSecret to distinguish btw payment processors
     const shouldDisplayStripePaymentForm = !loading && enableStripePaymentProcessor && options.clientSecret;
@@ -139,7 +121,6 @@ class SubscriptionCheckout extends React.Component {
               options={options}
               onSubmitPayment={this.handleSubmitStripe}
               onSubmitButtonClick={this.handleSubmitStripeButtonClick}
-              isBulkOrder={isBulkOrder}
               isProcessing={stripeIsSubmitting}
               isQuantityUpdating={isQuantityUpdating}
               isSubscription
@@ -163,18 +144,16 @@ class SubscriptionCheckout extends React.Component {
   }
 }
 
+// TODO: remove unused props
 SubscriptionCheckout.propTypes = {
-  // TODO: remove unused props
   intl: intlShape.isRequired,
   loading: PropTypes.bool,
   loaded: PropTypes.bool,
   fetchClientSecret: PropTypes.func.isRequired,
   submitPayment: PropTypes.func.isRequired,
-  isFreeBasket: PropTypes.bool,
   submitting: PropTypes.bool,
   isBasketProcessing: PropTypes.bool,
   paymentMethod: PropTypes.oneOf(['paypal', 'apple-pay', 'cybersource', 'stripe']),
-  orderType: PropTypes.oneOf(Object.values(ORDER_TYPES)),
   enableStripePaymentProcessor: PropTypes.bool,
   clientSecretId: PropTypes.string,
 };
@@ -184,9 +163,7 @@ SubscriptionCheckout.defaultProps = {
   loaded: false,
   submitting: false,
   isBasketProcessing: false,
-  isFreeBasket: false,
   paymentMethod: undefined,
-  orderType: ORDER_TYPES.SEAT,
   enableStripePaymentProcessor: false,
   clientSecretId: null,
 };

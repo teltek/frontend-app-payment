@@ -1,22 +1,23 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { connect } from 'react-redux';
-import { FormattedMessage, injectIntl, intlShape } from '@edx/frontend-platform/i18n';
-import { AppContext } from '@edx/frontend-platform/react';
+import React, { useEffect } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import {
+  FormattedMessage, useIntl,
+} from '@edx/frontend-platform/i18n';
+// import { AppContext } from '@edx/frontend-platform/react';
 import { sendPageEvent } from '@edx/frontend-platform/analytics';
 
 import messages from '../payment/PaymentPage.messages';
 
 // Actions
-import { fetchBasket } from '../payment/data/actions';
+import { fetchBasket } from './data/subscription/actions';
 
 // Selectors
-import { paymentSelector } from '../payment/data/selectors';
+import { paymentSelector } from './data/subscription/selectors';
 
 // Components
 import PageLoading from '../payment/PageLoading';
 import EmptyCartMessage from '../payment/EmptyCartMessage';
-import SubscriptionCart from './cart/SubscriptionCart';
+import SubscriptionCart from './details/SubscriptionDetails';
 import SubscriptionCheckout from './checkout/SubscriptionCheckout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
 import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
@@ -26,21 +27,30 @@ import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
  * This page will be responsible to handle all the new
  * program subscription checkout requests
  */
-export class SubscriptionPage extends React.Component {
-  componentDidMount() {
-    sendPageEvent();
-    this.props.fetchBasket();
-  }
+export const SubscriptionPage = () => {
+  const {
+    isEmpty,
+    isRedirect,
+    summaryQuantity,
+    summarySubtotal,
+  } = useSelector(paymentSelector);
+  const intl = useIntl();
+  const dispatch = useDispatch();
 
-  renderContent() {
-    const { isEmpty, isRedirect } = this.props;
+  useEffect(() => {
+    sendPageEvent();
+    dispatch(fetchBasket());
+  }, [dispatch]);
+
+  const renderContent = () => {
+    // const { isEmpty, isRedirect } = this.props;
     // If we're going to be redirecting to another page instead of showing the user the interface,
     // show a minimal spinner while the redirect is happening.  In other cases we want to show the
     // page skeleton, but in this case that would be misleading.
     if (isRedirect) {
       return (
         <PageLoading
-          srMessage={this.props.intl.formatMessage(messages['payment.loading.payment'])}
+          srMessage={intl.formatMessage(messages['payment.loading.payment'])}
         />
       );
     }
@@ -50,9 +60,6 @@ export class SubscriptionPage extends React.Component {
         <EmptyCartMessage />
       );
     }
-
-    // In all other cases, we want to render the basket content.  This is used before we've loaded
-    // anything, during loading, and after we've loaded a basket with a product in it.
 
     // We show the page content view for all cases except:
     //   1) an empty basket, and
@@ -77,43 +84,20 @@ export class SubscriptionPage extends React.Component {
         </div>
       </div>
     );
-  }
+  };
 
-  render() {
-    return (
-      <div className="subscription-page page__payment container-fluid py-5">
-        <FormattedAlertList
-          summaryQuantity={this.props.summaryQuantity}
-          summarySubtotal={this.props.summarySubtotal}
-        />
-        {this.renderContent()}
-        <ConfirmationModal />
-      </div>
-    );
-  }
-}
-
-SubscriptionPage.contextType = AppContext;
-
-SubscriptionPage.propTypes = {
-  intl: intlShape.isRequired,
-  isEmpty: PropTypes.bool,
-  isRedirect: PropTypes.bool,
-  fetchBasket: PropTypes.func.isRequired,
-  summaryQuantity: PropTypes.number,
-  summarySubtotal: PropTypes.number,
+  return (
+    <div className="subscription-page page__payment container-fluid py-5">
+      <FormattedAlertList
+        summaryQuantity={summaryQuantity}
+        summarySubtotal={summarySubtotal}
+      />
+      {renderContent()}
+      <ConfirmationModal />
+    </div>
+  );
 };
 
-SubscriptionPage.defaultProps = {
-  isEmpty: false,
-  isRedirect: false,
-  summaryQuantity: undefined,
-  summarySubtotal: undefined,
-};
+// SubscriptionPage.contextType = AppContext;
 
-const mapStateToProps = (state) => ({
-  // TODO: update this selector for subscription
-  ...paymentSelector(state),
-});
-
-export default connect(mapStateToProps, { fetchBasket })(injectIntl(SubscriptionPage));
+export default SubscriptionPage;

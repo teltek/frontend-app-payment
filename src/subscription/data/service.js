@@ -1,8 +1,8 @@
 import { ensureConfig, getConfig } from '@edx/frontend-platform';
 import { getAuthenticatedHttpClient } from '@edx/frontend-platform/auth';
 
-import handleRequestError from './handleRequestError';
-import { transformResults } from './utils';
+import handleRequestError from '../../payment/data/handleRequestError';
+import { transformResults } from '../../payment/data/utils';
 
 ensureConfig([
   'ECOMMERCE_BASE_URL',
@@ -47,41 +47,4 @@ export async function getBasket(discountJwt) {
     .get(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/payment/${discountJwtArg}`)
     .catch(handleBasketApiError);
   return transformResults(data);
-}
-
-export async function postQuantity(quantity) {
-  const { data } = await getAuthenticatedHttpClient()
-    .post(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/quantity/`, { quantity })
-    .catch(handleBasketApiError);
-  return transformResults(data);
-}
-
-export async function postCoupon(code) {
-  const { data } = await getAuthenticatedHttpClient()
-    .post(
-      `${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/`,
-      { code },
-      {
-        headers: { 'Content-Type': 'application/json' },
-      },
-    )
-    .catch(handleBasketApiError);
-  return transformResults(data);
-}
-
-export async function deleteCoupon(id) {
-  const { data } = await getAuthenticatedHttpClient()
-    .delete(`${getConfig().ECOMMERCE_BASE_URL}/bff/payment/v0/vouchers/${id}`)
-    .catch(handleBasketApiError);
-  return transformResults(data);
-}
-
-export async function getDiscountData(courseKey) {
-  const { data } = await getAuthenticatedHttpClient().get(
-    `${getConfig().LMS_BASE_URL}/api/discounts/course/${courseKey}`,
-    {
-      withCredentials: true,
-    },
-  );
-  return data;
 }

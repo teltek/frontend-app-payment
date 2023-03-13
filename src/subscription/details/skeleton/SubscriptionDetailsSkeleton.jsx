@@ -2,7 +2,7 @@ import React from 'react';
 import { Skeleton } from '@edx/paragon';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 
-const SubscriptionCartSkeleton = () => (
+const SubscriptionDetailsSkeleton = () => (
   <div className="sub-cart-skeleton">
     <span className="sr-only">
       <FormattedMessage
@@ -45,4 +45,4 @@ const SubscriptionCartSkeleton = () => (
   </div>
 );
 
-export default SubscriptionCartSkeleton;
+export default SubscriptionDetailsSkeleton;

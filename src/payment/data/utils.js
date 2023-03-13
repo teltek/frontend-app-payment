@@ -1,6 +1,7 @@
 import camelCase from 'lodash.camelcase';
 import snakeCase from 'lodash.snakecase';
 import { getConfig } from '@edx/frontend-platform';
+import { ORDER_TYPES } from './constants';
 
 export function modifyObjectKeys(object, modify) {
   // If the passed in object is not an object, return it.
@@ -134,4 +135,25 @@ export function generateAndSubmitForm(url, params = {}) {
 export function isWaffleFlagEnabled(flagName, defaultValue = false) {
   const value = getConfig().WAFFLE_FLAGS[flagName];
   return typeof value !== 'undefined' ? value : defaultValue;
+}
+
+function getOrderType(productType) {
+  switch (productType) {
+    case 'Enrollment Code':
+      return ORDER_TYPES.BULK_ENROLLMENT;
+    case 'Course Entitlement':
+      return ORDER_TYPES.ENTITLEMENT;
+    case 'Seat':
+    default:
+      return ORDER_TYPES.SEAT;
+  }
+}
+
+export function transformResults(data) {
+  const results = camelCaseObject(data);
+
+  const lastProduct = results.products && results.products[results.products.length - 1];
+  results.orderType = getOrderType(lastProduct && lastProduct.productType);
+
+  return results;
 }

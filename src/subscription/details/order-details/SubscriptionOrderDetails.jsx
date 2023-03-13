@@ -57,12 +57,7 @@ const SubscriptionOrderDetails = ({
 };
 
 SubscriptionOrderDetails.propTypes = {
-  programTitle: PropTypes.string,
-};
-
-SubscriptionOrderDetails.defaultProps = {
-  // TODO: Fix dynamic program title
-  programTitle: 'Blockchain Fundamentals',
+  programTitle: PropTypes.string.isRequired,
 };
 
 export default SubscriptionOrderDetails;
