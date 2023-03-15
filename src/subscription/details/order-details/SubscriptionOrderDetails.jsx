@@ -29,7 +29,7 @@ const SubscriptionOrderDetails = ({
       <FormattedMessage
         id="subscription.cart.order.details.heading"
         defaultMessage="Order details"
-        description="The heading for details about an subscription order"
+        description="The heading for subscription order details."
       >
         {text => <h5 aria-level="2">{text}</h5>}
       </FormattedMessage>

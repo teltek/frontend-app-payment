@@ -18,7 +18,7 @@ import { paymentSelector } from './data/subscription/selectors';
 import PageLoading from '../payment/PageLoading';
 import EmptyCartMessage from '../payment/EmptyCartMessage';
 import SubscriptionCart from './details/SubscriptionDetails';
-import SubscriptionCheckout from './checkout/SubscriptionCheckout';
+import { SubscriptionCheckout } from './checkout/SubscriptionCheckout';
 import { FormattedAlertList } from '../components/formatted-alert-list/FormattedAlertList';
 import { ConfirmationModal } from './confirmation-modal/ConfirmationModal';
 

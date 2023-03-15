@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { FormattedMessage } from '@edx/frontend-platform/i18n';
 import { Badge } from '@edx/paragon';
 
-// TODO: Fix the a11y and dynamic headings
 const CartContents = ({ children, details }) => (
   <div className="basket-section">
     <h5 aria-level="2">
@@ -27,12 +26,11 @@ const CartContents = ({ children, details }) => (
         </Badge>
       </div>
 
-      {/** TODO: Render different certificate types as Done in <ProductLineItem /> */}
       <h4 aria-level="2" className="mb-0">
         <FormattedMessage
-          id="subscription.purchase.cart.certificate.type"
-          defaultMessage="Professional Certificate"
-          description="Sub heading for the program certificate type in product details section"
+          id="subscription.certificate.type.verified"
+          defaultMessage="Verified Certificate"
+          description="Verified program certificate type to display subscription details"
         />
       </h4>
       <p aria-level="2" className="body small mb-5">
@@ -54,7 +52,7 @@ CartContents.propTypes = {
   children: PropTypes.node.isRequired,
   details: PropTypes.shape({
     programTitle: PropTypes.string,
-    programType: PropTypes.string,
+    certificate_type: PropTypes.string,
     organization: PropTypes.string,
   }).isRequired,
 };

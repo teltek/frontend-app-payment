@@ -16,9 +16,9 @@ const basketInitialState = {
   // TODO: remove these once fetched from DB
   details: {
     programTitle: 'Blockchain Fundamentals',
-    programType: 'Professional Certificate',
+    certificate_type: 'verified',
     organization: 'University of California, Berkeley',
-    price: 1,
+    price: 0,
   },
 };
 
