@@ -112,12 +112,6 @@ class Checkout extends React.Component {
           </h5>
 
           <p className="d-flex flex-wrap">
-            <button type="button" className="payment-method-button active">
-              <img
-                src={AcceptedCardLogos}
-                alt={intl.formatMessage(messages['payment.page.method.type.credit'])}
-              />
-            </button>
 
             <PayPalButton
               onClick={this.handleSubmitPayPal}
