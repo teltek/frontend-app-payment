@@ -55,7 +55,7 @@ LocalizedPrice.propTypes = {
 LocalizedPrice.defaultProps = {
   amount: undefined,
   conversionRate: 1,
-  currencyCode: 'USD',
+  currencyCode: 'EUR',
   showAsLocalizedCurrency: false,
 };
 
